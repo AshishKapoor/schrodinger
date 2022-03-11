@@ -16,7 +16,7 @@ export const GridComponent = () => {
     { i: "bill-of-lading", x: 1, y: 0, w: 1, h: 1 },
     { i: "invoice", x: 2, y: 0, w: 1, h: 1 },
     { i: "bank-draft-2", x: 0, y: 1, w: 1, h: 1 },
-    { i: "bill-of-lading-2", x: 1, y: 1, w: 1, h: 1 }
+    { i: "bill-of-lading-2", x: 1, y: 1, w: 1, h: 1 },
   ];
 
   return (
