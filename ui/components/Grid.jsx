@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import useSwr from "swr";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import ReactModal from "react-modal";
+import styles from "../styles/Grid.module.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export const GridComponent = () => {
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data, error } = useSwr("api/cats", fetcher);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPhoto, setShowPhoto] = useState(undefined);
 
   if (error) return <div>Failed to load users</div>;
   if (!data) return <div>Loading...</div>;
@@ -19,6 +23,39 @@ export const GridComponent = () => {
     { i: "bill-of-lading-2", x: 1, y: 1, w: 1, h: 1 },
   ];
 
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = (type) => {
+    setShowModal(true);
+    setShowPhoto(type);
+  };
+
+  if (showModal) {
+    return (
+      <ReactModal
+        onRequestClose={handleCloseModal}
+        shouldCloseOnOverlayClick={true}
+        isOpen={showModal}
+        ariaHideApp={false}
+        className={styles.Modal}
+        overlayClassName={styles.Overlay}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            style={{ width: 600, height: 650 }}
+            src={`/cats/${selectedPhoto}.png`}
+            alt={selectedPhoto}
+          />
+        </div>
+      </ReactModal>
+    );
+  }
+
   return (
     <div style={{ width: 800 }}>
       <ResponsiveGridLayout
@@ -30,7 +67,7 @@ export const GridComponent = () => {
         isBounded={true}
       >
         {data.map((cat) => (
-          <div key={cat.type} onClick={() => console.log(cat.title)}>
+          <div key={cat.type} onClick={() => handleOpenModal(cat.type)}>
             <p>{cat.title}</p>
             <img
               style={{ width: 200, height: 200 }}
