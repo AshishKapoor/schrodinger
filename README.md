@@ -7,8 +7,8 @@ A cats gallery app.
 3. About the UI, I got the main feature in the middle of the page with basic CSS and a nearly dumb logic.
 4. Made use of NextJS's cool server to get the fixture json data over network.
 5. Made use of react grid layout for the drag and drop feature in a 3 x 2 grid with 5 cards.
+6. Made use of react modal for the overlay feature.
 
 ### TODO: -
 
 1. Find some fancy loader (Skeleton UI) or something quick to represent the loading state.
-2. Find some overlay library for react or make use of [React Portals](https://reactjs.org/docs/portals.html).
