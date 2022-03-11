@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useSwr from "swr";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import ReactModal from "react-modal";
+import styles from "../styles/Grid.module.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -35,10 +36,18 @@ export const GridComponent = () => {
         shouldCloseOnOverlayClick={true}
         isOpen={showModal}
         ariaHideApp={false}
+        className={styles.Modal}
+        overlayClassName={styles.Overlay}
       >
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <img
-            style={{ width: 800, height: 800 }}
+            style={{ width: 600, height: 650 }}
             src={`/cats/${selectedPhoto}.png`}
             alt={selectedPhoto}
           />
