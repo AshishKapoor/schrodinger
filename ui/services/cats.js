@@ -5,6 +5,6 @@ export const fetchAllCats = async () => {
     const { status, data } = await API.get(API_ENDPOINTS.cats);
     return status === 200 && data;
   } catch (error) {
-    sendNotification(String(error), 'error');
+    throw error;
   }
 };
