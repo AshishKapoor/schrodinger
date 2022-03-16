@@ -1,5 +1,6 @@
 # Schrodinger
 
+## UI
 A cats gallery app.
 
 1. Picked up NextJS since the application isn’t currently behind any authentication system yet.
@@ -12,3 +13,13 @@ A cats gallery app.
 ### TODO: -
 
 1. Find some fancy loader (Skeleton UI) or something quick to represent the loading state.
+
+## API
+Using fastAPI
+
+1. Got a simple get all cats resource ready.
+
+### TODO: -
+
+1. Create a PostgreSQL / SQLite table that can hold the data instead of the static json file.
+2. Build a REST API that can fetch the data from this cats table and add data to this table. (Take a look at [starlette](https://github.com/tiangolo/uvicorn-gunicorn-starlette-docker)).
