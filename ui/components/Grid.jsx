@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useSwr from "swr";
+import { useFetchAllCats } from "../hooks/cats";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import ReactModal from "react-modal";
 import styles from "../styles/Grid.module.css";
@@ -7,12 +7,10 @@ import styles from "../styles/Grid.module.css";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export const GridComponent = () => {
-  const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data, error } = useSwr("api/cats", fetcher);
+  const data = useFetchAllCats();
   const [showModal, setShowModal] = useState(false);
   const [selectedPhoto, setShowPhoto] = useState(undefined);
 
-  if (error) return <div>Failed to load users</div>;
   if (!data) return <div>Loading...</div>;
 
   var layout = [
