@@ -65,7 +65,7 @@ export const GridComponent = () => {
         isBounded={true}
       >
         {data.map((cat) => (
-          <div key={cat.type} onClick={() => handleOpenModal(cat.type)}>
+          <div key={cat.type} style={{ cursor: 'pointer' }} onClick={() => handleOpenModal(cat.type)}>
             <p>{cat.title}</p>
             <img
               style={{ width: 200, height: 200 }}
