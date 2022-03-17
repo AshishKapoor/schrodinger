@@ -4,6 +4,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+Using node v17.
+
 ```bash
 npm run dev
 # or
@@ -20,6 +22,18 @@ then
 
 ```
 $ docker run -p 3000:3000 -t -i ui
+```
+
+Frontend is exposed at port 3000
+
+```
+localhost:3000
+```
+
+Backend is exposed at port 8000
+
+```
+localhost:8000
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
