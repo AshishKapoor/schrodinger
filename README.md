@@ -1,4 +1,5 @@
 # Schrodinger
+![cats](https://user-images.githubusercontent.com/5203107/158726355-2ca8868b-3dae-45fd-a845-85a464d6c206.gif)
 
 ## UI
 A cats gallery app.
