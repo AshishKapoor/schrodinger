@@ -24,3 +24,7 @@ Using fastAPI
 
 1. Create a PostgreSQL / SQLite table that can hold the data instead of the static json file.
 2. Build a REST API that can fetch the data from this cats table and add data to this table. (Take a look at [starlette](https://github.com/tiangolo/uvicorn-gunicorn-starlette-docker)).
+
+## Deployment
+
+1. Added individual Dockerfile and wrote a docker-compose at the root dir. (Should be good for now).
