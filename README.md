@@ -1,7 +1,21 @@
 # Schrodinger
+
 ![cats](https://user-images.githubusercontent.com/5203107/158726355-2ca8868b-3dae-45fd-a845-85a464d6c206.gif)
 
+Run with docker
+
+```
+$ docker-compose up -d
+```
+
+Or run them individually
+
+```
+Steps are available in ./api and ./ui directories README.md
+```
+
 ## UI
+
 A cats gallery app.
 
 1. Picked up NextJS since the application isn’t currently behind any authentication system yet.
@@ -16,6 +30,7 @@ A cats gallery app.
 1. Find some fancy loader (Skeleton UI) or something quick to represent the loading state.
 
 ## API
+
 Using fastAPI
 
 1. Got a simple get all cats resource ready.
