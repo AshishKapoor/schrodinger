@@ -1,7 +1,7 @@
 FROM node:lts as dependencies
 WORKDIR /ui
 COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
+RUN npm install
 
 FROM node:lts as builder
 WORKDIR /ui
@@ -20,4 +20,5 @@ COPY --from=builder /ui/node_modules ./node_modules
 COPY --from=builder /ui/package.json ./package.json
 
 EXPOSE 3000
+
 CMD ["npm", "start"]
