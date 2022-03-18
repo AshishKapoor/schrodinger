@@ -1,31 +1,71 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+import databases
+import sqlalchemy
+from starlette.applications import Starlette
+from starlette.config import Config
+from starlette.responses import JSONResponse
+from starlette.routing import Route
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 
-app = FastAPI()
-
-origins = [
-  "http://localhost",
-  "http://localhost:3000",
+middleware = [
+  Middleware(CORSMiddleware, allow_origins=["*"]),
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+# Configuration from environment variables or '.env' file.
+config = Config('.env')
+DATABASE_URL = config('DATABASE_URL')
+
+
+# Database table definitions.
+metadata = sqlalchemy.MetaData()
+
+posts = sqlalchemy.Table(
+    "posts",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
+    sqlalchemy.Column("type", sqlalchemy.String),
+    sqlalchemy.Column("title", sqlalchemy.String),
+    sqlalchemy.Column("position", sqlalchemy.Integer),
 )
 
-@app.get("/health")
-async def root():
-    return {"status": "Ok"}
+database = databases.Database(DATABASE_URL)
 
-@app.get("/cats/")
-async def get_all_cats():
-    return [
-  { "type": "bank-draft", "title": "Bank Draft", "position": 0 },
-  { "type": "bill-of-lading", "title": "Bill of Lading", "position": 1 },
-  { "type": "invoice", "title": "Invoice", "position": 2 },
-  { "type": "bank-draft-2", "title": "Bank Draft 2", "position": 3 },
-  { "type": "bill-of-lading-2", "title": "Bill of Lading 2", "position": 4 },
+# Main application code.
+async def list_posts(request):
+    query = posts.select()
+    results = await database.fetch_all(query)
+    content = [
+        {
+            "type": result["type"],
+            "title": result["title"],
+            "position": result["position"]
+        }
+        for result in results
+    ]
+    return JSONResponse(content)
+
+async def add_post(request):
+    data = await request.json()
+    query = posts.insert().values(
+       type=data["type"],
+       title=data["title"],
+       position=data["position"]
+    )
+    await database.execute(query)
+    return JSONResponse({
+        "type": data["type"],
+        "title": data["title"],
+        "position": data["position"]
+    })
+
+routes = [
+    Route("/posts", endpoint=list_posts, methods=["GET"]),
+    Route("/posts", endpoint=add_post, methods=["POST"]),
 ]
+
+app = Starlette(
+    routes=routes,
+    middleware=middleware,
+    on_startup=[database.connect],
+    on_shutdown=[database.disconnect]
+)

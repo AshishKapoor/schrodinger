@@ -6,5 +6,5 @@ export default axios.create({
 });
 
 export const API_ENDPOINTS = {
-  cats: "/cats",
+  posts: "/posts",
 };

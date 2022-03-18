@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useFetchAllCats } from "../hooks/cats";
+import { useFetchAllPosts } from "../hooks/posts";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import ReactModal from "react-modal";
 import styles from "../styles/Grid.module.css";
@@ -7,7 +7,7 @@ import styles from "../styles/Grid.module.css";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export const GridComponent = () => {
-  const data = useFetchAllCats();
+  const data = useFetchAllPosts();
   const [showModal, setShowModal] = useState(false);
   const [selectedPhoto, setShowPhoto] = useState(undefined);
 
