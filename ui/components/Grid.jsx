@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import ReactModal from "react-modal";
 import isEqual from "lodash.isequal";
+import throttle from "lodash.throttle";
+import { FIVE_SECONDS } from "../constants";
 
 import { useFetchAllPosts } from "../hooks/posts";
 import { updatePost } from "../services/posts";
@@ -11,10 +13,6 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export const GridComponent = () => {
   // attributes
-  let apiInterval;
-
-  const FIVE_SECONDS = 5000;
-
   const data = useFetchAllPosts();
 
   const [showModal, setShowModal] = useState(false);
@@ -46,15 +44,12 @@ export const GridComponent = () => {
       y: newItem.y,
     };
     await updatePost(body);
-    clearInterval(apiInterval);
   };
 
   const onDragStop = (_, oldItem, newItem) => {
     if (showModal === false) {
       if (!isEqual(oldItem, newItem)) {
-        apiInterval = setInterval(() => {
-          updateLayout(newItem);
-        }, FIVE_SECONDS);
+        updateLayout(newItem);
       }
     }
   };
@@ -104,7 +99,7 @@ export const GridComponent = () => {
         cols={{ lg: 3 }}
         rowHeight={250}
         isBounded={true}
-        onDragStop={onDragStop}
+        onDragStop={throttle(onDragStop, FIVE_SECONDS)}
       >
         {data.map((cat) => (
           <div
