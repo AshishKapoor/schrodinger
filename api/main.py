@@ -76,7 +76,7 @@ async def update_posts(request):
         )
         await database.execute(stmt)
         return JSONResponse({
-            "success": "Ok"
+            "success": f"Updated x: {payload['x']} and y: {payload['y']} for type: {request.path_params['type']}"
         })
     except:
         print('Error in def update_posts')
