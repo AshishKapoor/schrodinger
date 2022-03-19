@@ -31,15 +31,12 @@ A cats gallery app.
 
 ## API
 
-Using fastAPI
+Using Starlette, and SQLAlchemy
 
 1. Got a simple get all cats resource ready.
-
-### TODO: -
-
-1. Create a PostgreSQL / SQLite table that can hold the data instead of the static json file.
-2. Build a REST API that can fetch the data from this cats table and add data to this table. (Take a look at [starlette](https://github.com/tiangolo/uvicorn-gunicorn-starlette-docker)).
+2. Made use of SQLite db that can hold the data instead of the static json file.
+3. A REST API that can fetch the data from this cats table and add data to this table.
 
 ## Deployment
 
-1. Added individual Dockerfile and wrote a docker-compose at the root dir. (Should be good for now).
+1. Added individual Dockerfile and wrote a docker-compose at the root dir. (Should be good for development env.).
