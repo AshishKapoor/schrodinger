@@ -99,7 +99,10 @@ export const GridComponent = () => {
         cols={{ lg: 3 }}
         rowHeight={250}
         isBounded={true}
-        onDragStop={throttle(onDragStop, FIVE_SECONDS, { leading: true, trailing: true })}
+        onDragStop={throttle(onDragStop, FIVE_SECONDS, {
+          leading: false,
+          trailing: true,
+        })}
       >
         {data.map((cat) => (
           <div
