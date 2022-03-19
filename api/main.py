@@ -8,7 +8,7 @@ from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 
 middleware = [
-  Middleware(CORSMiddleware, allow_origins=["*"]),
+  Middleware(CORSMiddleware, allow_origins=["*"], allow_methods=['GET', 'POST']),
 ]
 
 # Configuration from environment variables or '.env' file.
@@ -67,13 +67,24 @@ async def add_post(request):
     })
 
 async def update_posts(request):
-    data = await request.json()
-    print('data WIP: ', data);
+    payload = await request.json()
+    try:
+        stmt = posts.update().where(
+            posts.c.type == request.path_params['type']
+        ).values(
+            x=payload['x'], y=payload['y']
+        )
+        await database.execute(stmt)
+        return JSONResponse({
+            "success": "Ok"
+        })
+    except:
+        print('Error in def update_posts')
 
 routes = [
     Route("/posts", endpoint=list_posts, methods=["GET"]),
     Route("/posts", endpoint=add_post, methods=["POST"]),
-    Route("/posts", endpoint=update_posts, methods=["POST"]),
+    Route("/posts/{type}", endpoint=update_posts, methods=["POST"]),
 ]
 
 app = Starlette(

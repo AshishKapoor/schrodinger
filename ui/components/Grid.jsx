@@ -4,6 +4,7 @@ import ReactModal from "react-modal";
 import isEqual from "lodash.isequal";
 
 import { useFetchAllPosts } from "../hooks/posts";
+import { updatePost } from "../services/posts";
 import styles from "../styles/Grid.module.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -21,7 +22,7 @@ export const GridComponent = () => {
   const [layout, setLayout] = useState([]);
 
   const [selectedPhoto, setShowPhoto] = useState(undefined);
-  
+
   // methods
   const generateLayout = data?.map((d) => ({
     i: d.type,
@@ -38,16 +39,21 @@ export const GridComponent = () => {
     setShowPhoto(type);
   };
 
-  const updateLayout = (layout) => {
-    console.log("update with new layout: ", layout);
+  const updateLayout = async (newItem) => {
+    const body = {
+      type: newItem.i,
+      x: newItem.x,
+      y: newItem.y,
+    };
+    await updatePost(body);
     clearInterval(apiInterval);
   };
 
-  const onDragStop = (layout, oldItem, newItem) => {
+  const onDragStop = (_, oldItem, newItem) => {
     if (showModal === false) {
       if (!isEqual(oldItem, newItem)) {
         apiInterval = setInterval(() => {
-          updateLayout(layout);
+          updateLayout(newItem);
         }, FIVE_SECONDS);
       }
     }
