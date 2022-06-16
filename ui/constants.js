@@ -1,5 +1,5 @@
-const FIVE_SECONDS = 5000;
+const ONE_SECOND = 1000;
 
 export {
-  FIVE_SECONDS
+  ONE_SECOND
 };

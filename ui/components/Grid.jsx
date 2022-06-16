@@ -3,7 +3,7 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import ReactModal from "react-modal";
 import isEqual from "lodash.isequal";
 import throttle from "lodash.throttle";
-import { FIVE_SECONDS } from "../constants";
+import { ONE_SECOND } from "../constants";
 
 import { useFetchAllPosts } from "../hooks/posts";
 import { updatePost } from "../services/posts";
@@ -99,7 +99,7 @@ export const GridComponent = () => {
         cols={{ lg: 3 }}
         rowHeight={250}
         isBounded={true}
-        onDragStop={throttle(onDragStop, FIVE_SECONDS, {
+        onDragStop={throttle(onDragStop, ONE_SECOND, {
           leading: false,
           trailing: true,
         })}
